@@ -3,6 +3,7 @@ steps:
     args: ['build', '-t', 'eu.gcr.io/$PROJECT_ID/ps-app:$SHORT_SHA', '.']
 
 images:
+  - 'eu.gcr.io/$PROJECT_ID/ps-app:latest'
   - 'eu.gcr.io/$PROJECT_ID/ps-app:$SHORT_SHA'
 
 tags: ['ps-app']
