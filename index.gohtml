@@ -1,0 +1,34 @@
+<html lang="en">
+<head>
+    <title>Welcome to paymentsense</title>
+    <style>
+        h1 {text-align: center;}
+        table, th, td {
+            margin-left:auto;
+            margin-right:auto;
+            width: auto;
+            border: 1px solid black;
+            text-align: left;
+        }
+    </style>
+</head>
+<body>
+<h1>Paymentsense Products</h1>
+{{if .Products}}
+<table>
+    <tr>
+    {{ range $key, $_ := index .Products 0}}
+        <th>{{$key}}</th>
+    {{end}}
+    </tr>
+    {{range $product := .Products}}
+        <tr>
+        {{range $_, $value := $product}}
+            <td>{{$value}}</td>
+        {{end}}
+        </tr>
+    {{end}}
+</table>
+{{end}}
+</body>
+</html>
