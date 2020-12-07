@@ -7,6 +7,7 @@ COPY go.mod /ps-app/
 WORKDIR /ps-app
 ENV GOOS linux
 ENV GOARCH amd64
+RUN go test -v ./...
 RUN go build -ldflags="-linkmode external -extldflags -static" -o /ps-app/bin/ps-app ./
 
 FROM scratch
