@@ -4,7 +4,7 @@ steps:
     args: ['-c', 'gcloud auth print-access-token > access_token.txt']
 
   - name: bash
-    args: ['ls -lah']
+    args: ['ls', '-lah']
 
   - name: bash
     args: ['cat', 'access_token.txt']
