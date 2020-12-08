@@ -10,11 +10,14 @@ import (
 )
 
 func RunWebserver() error {
+	port := os.Getenv("PORT")
+
 	server := &http.Server{
-		Addr: "0.0.0.0:9292",
+		Addr: "0.0.0.0:" + port,
 	}
 
 	http.HandleFunc("/", HandleProducts)
+	http.HandleFunc("/healthz", HandleHealthz)
 
 	go func() {
 		c := make(chan os.Signal, 1)

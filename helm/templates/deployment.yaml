@@ -1,0 +1,36 @@
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: {{ .Release.Name }}
+  namespace: {{ .Release.Namespace }}
+  labels:
+    app: ps-app
+spec:
+  selector:
+    matchLabels:
+      app: ps-app
+  template:
+    metadata:
+      labels:
+        app: ps-app
+    spec:
+      {{- if .Values.serviceAccount.create }}
+      serviceAccountName: {{ .Release.Name }}
+      {{- end }}
+      containers:
+        - name: ps-app
+          image: "{{ .Values.image.repository }}:{{ .Chart.AppVersion }}"
+          imagePullPolicy: {{ .Values.image.pullPolicy }}
+          ports:
+            - containerPort: {{ .Values.service.containerPort }}
+              name: http
+          env:
+            - name: PORT
+              value: {{ .Values.service.containerPort }}
+            - name: PRODUCTS_URL
+              value: {{ .Values.app.productsUrl }}
+          readinessProbe:
+            httpGet:
+              path: /healthz
+              port: {{ .Values.service.containerPort }}

@@ -1,0 +1,19 @@
+app:
+  productsUrl: "https://reqres.in/api/products/"
+
+image:
+  repository: eu.gcr.io/core-simon/ps-app
+  pullPolicy: Always
+
+serviceAccount:
+  create: true
+
+autoscaler:
+  minimumReplicas: 1
+  maximumReplicas: 3
+  cpuAverageUtilisation: 100
+
+service:
+  type: ClusterIP
+  port: 80
+  containerPort: 9292

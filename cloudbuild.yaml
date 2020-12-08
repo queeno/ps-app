@@ -1,8 +1,12 @@
 steps:
-  - name: gcr.io/cloud-builders/docker
-    args: ['build', '-t', 'eu.gcr.io/$PROJECT_ID/ps-app', '.']
+  - name: gcr.io/cloud-builders/gcloud-slim
+    args: ['auth', 'print-access-token']
+#  - name: gcr.io/cloud-builders/docker
+#    args: ['build', '-t', 'eu.gcr.io/$PROJECT_ID/ps-app', '.']
 
-images:
-  - 'eu.gcr.io/$PROJECT_ID/ps-app'
+
+
+#images:
+#  - 'eu.gcr.io/$PROJECT_ID/ps-app'
 
 tags: ['ps-app']

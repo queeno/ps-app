@@ -32,7 +32,7 @@ func TestMain(m *testing.M) {
 	os.Exit(m.Run())
 }
 
-func createFakeRequest() *http.Response {
+func createFakeProductsRequest() *http.Response {
 	req := httptest.NewRequest("GET", "http://example.com/foo", nil)
 	w := httptest.NewRecorder()
 
@@ -41,7 +41,7 @@ func createFakeRequest() *http.Response {
 }
 
 func TestRetrieveProducts(t *testing.T) {
-	resp := createFakeRequest()
+	resp := createFakeProductsRequest()
 
 	body, err := ioutil.ReadAll(resp.Body)
 	if err != nil {
@@ -65,7 +65,7 @@ func TestUnsetProductsURL(t *testing.T) {
 		t.Fatal(err)
 	}
 
-	resp := createFakeRequest()
+	resp := createFakeProductsRequest()
 
 	body, err := ioutil.ReadAll(resp.Body)
 	if err != nil {
