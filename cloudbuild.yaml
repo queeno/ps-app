@@ -1,13 +1,16 @@
 steps:
+  # Substitute $SHORT_SHA to Chart.yaml/appVersion
   - name: mikefarah/yq
     dir: helm
     args: ['yq', 'w', '-i', 'Chart.yaml', 'appVersion', $SHORT_SHA]
 
+  # Retrieve GCloud access token
   - name: gcr.io/google.com/cloudsdktool/cloud-sdk:alpine
     entrypoint: /bin/sh
     dir: helm
     args: ['-c', 'gcloud auth print-access-token > access_token.txt']
 
+  # Upload Helm chart to GCR
   - name: alpine/helm
     dir: helm
     env:
@@ -17,9 +20,11 @@ steps:
     - '-c'
     - 'cat access_token.txt | helm registry login eu.gcr.io -u oauth2accesstoken --password-stdin && helm chart save . eu.gcr.io/$PROJECT_ID/ps-app-helm:0.0.1 && helm chart push eu.gcr.io/$PROJECT_ID/ps-app-helm:0.0.1'
 
+  # Build App container image
   - name: gcr.io/cloud-builders/docker
     args: ['build', '-t', 'eu.gcr.io/$PROJECT_ID/ps-app', '.']
 
+# Upload App container image to GCR
 images:
   - 'eu.gcr.io/$PROJECT_ID/ps-app'
 
