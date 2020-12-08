@@ -1,16 +1,26 @@
 steps:
-  - name: gcr.io/google.com/cloudsdktool/cloud-sdk:alpine
-    entrypoint: /bin/sh
-    args: ['-c', 'gcloud auth print-access-token > access_token.txt']
-
   - name: mikefarah/yq
     dir: helm
     args: ['yq', 'w', '-i', 'Chart.yaml', 'appVersion', $SHORT_SHA]
 
-
-  - name: bash
+  - name: gcr.io/google.com/cloudsdktool/cloud-sdk:alpine
+    entrypoint: /bin/sh
     dir: helm
-    args: ['cat', 'Chart.yaml']
+    args: ['-c', 'gcloud auth print-access-token > access_token.txt']
+
+  - name: helm:alpine
+    dir: helm
+    env:
+      - HELM_EXPERIMENTAL_OCI=1
+    entrypoint: /bin/sh
+    args:
+    - '-c'
+    - 'cat access_token.txt | \
+    helm registry login eu.gcr.io -u oauth2accesstoken --password-stdin && \
+    helm chart save . eu.gcr.io/$PROJECT_ID/ps-app:0.0.1 && \
+    helm chart push eu.gcr.io/$PROJECT_ID/ps-app:0.0.1'
+
+
 #  - name: gcr.io/cloud-builders/docker
 #    args: ['build', '-t', 'eu.gcr.io/$PROJECT_ID/ps-app', '.']
 
