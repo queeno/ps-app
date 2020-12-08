@@ -8,7 +8,7 @@ steps:
     dir: helm
     args: ['-c', 'gcloud auth print-access-token > access_token.txt']
 
-  - name: helm:alpine
+  - name: alpine/helm
     dir: helm
     env:
       - HELM_EXPERIMENTAL_OCI=1
