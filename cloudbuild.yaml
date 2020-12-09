@@ -25,10 +25,10 @@ steps:
 
   # Build App container image
   - name: gcr.io/cloud-builders/docker
-    args: ['build', '-t', 'eu.gcr.io/$PROJECT_ID/ps-app', '.']
+    args: ['build', '-t', 'eu.gcr.io/$PROJECT_ID/ps-app:$SHORT_SHA', '.']
 
 # Upload App container image to GCR
 images:
-  - 'eu.gcr.io/$PROJECT_ID/ps-app'
+  - "eu.gcr.io/$PROJECT_ID/ps-app:$SHORT_SHA"
 
 tags: ['ps-app']
