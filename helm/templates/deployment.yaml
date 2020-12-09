@@ -27,9 +27,9 @@ spec:
               name: http
           env:
             - name: PORT
-              value: {{ .Values.service.containerPort }}
+              value: "{{ .Values.service.containerPort }}"
             - name: PRODUCTS_URL
-              value: {{ .Values.app.productsUrl }}
+              value: "{{ .Values.app.productsUrl }}"
           readinessProbe:
             httpGet:
               path: /healthz
