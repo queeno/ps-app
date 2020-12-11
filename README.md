@@ -11,7 +11,7 @@ and displays them on a webpage.
 - Helm 3.0+
 - Kubernetes 1.16+
 - Google Cloud Build (for CI pipeline). 
-  The [GitHub plugin](https://github.com/marketplace/google-cloud-build) has been used for development.
+  The [GitHub plugin](https://github.com/marketplace/google-cloud-build) has been used for development purposes.
   
 ## Quickstart
 
@@ -21,7 +21,7 @@ Please configure the application before running, either by setting the relevant 
 the respective helm keys.
 
 | Environment Variable  | Helm Chart Key | Description  | Application default | Helm Chart default | 
-|-----------|-----------|-------------|---------------------|--------------------|
+|-----------|-----------|--------------------------|---------------------|-----------|
 | PRODUCTS_URL | .Values.app.productsUrl | The URL of the Products website | None | `https://reqres.in/api/products/` |
 | PORT         | .Values.service.containerPort | The webserver port              | None | `9292` |
 | LOG_LEVEL    | .Values.app.logLevel | The logging level      | `debug` | `debug` |
@@ -50,7 +50,9 @@ A Helm chart has been included in the repository to facilitate installation insi
 A cloudbuild pipeline has been provided which automates the first three steps previously described:
 
 1. It builds a minimal Docker image.
+1. It tags it with the current `$SHORT_SHA`.
 1. It uploads it to GCR.
+1. It edits the Helm Chart's appVersion with the current `$SHORT_SHA`.
 1. It builds and uploads the Helm chart to GCR.
 
 The application will be deployed by the ps-infra terraform script.
