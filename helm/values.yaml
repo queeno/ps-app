@@ -1,5 +1,6 @@
 app:
   productsUrl: "https://reqres.in/api/products/"
+  logLevel: debug
 
 image:
   repository: eu.gcr.io/core-simon/ps-app
