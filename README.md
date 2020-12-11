@@ -3,7 +3,7 @@
 Ps-app is a simple, straight-forward webserver that queries a list of products, published in JSON format,
 and displays them on a webpage.
 
-**Warning: Please run the Cloud Build pipeline in this repository before running `ps-app`**
+**Warning: Please run the Cloud Build pipeline in this repository before running `ps-infra`**
 
 ## Prerequisites
 
@@ -55,7 +55,7 @@ A cloudbuild pipeline has been provided which automates the first three steps pr
 1. It edits the Helm Chart's appVersion with the current `$SHORT_SHA`.
 1. It builds and uploads the Helm chart to GCR.
 
-The application will be deployed by the ps-infra terraform script.
+The application will be deployed by the `ps-infra` terraform script.
 Please run this pipeline before running terraform.
 
 ## How to use
